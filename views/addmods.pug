@@ -13,14 +13,23 @@ block content
   script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js",
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF",
         crossorigin="anonymous")
-  p Welcome to #{title}
-  p Working on Express using Heroku
-  button(type="button" class="btn btn-primary",onclick="update()") Press Me
-  div(id="target") Display
-  a(href = '/animal') animal Page link
-  script. 
-    let client_count = 0;
-    function update() {
-      client_count = client_count + 1;
-      document.getElementById("target").innerHTML = `Value now ${client_count}`  ;
-      }
+  p Rows = #{query.rows} and Columns = #{query.cols}
+    -
+        rows= Number(query.rows)
+        col= Number(query.cols)
+    if !Number.isInteger(rows)
+        p below mentioned rows are not accurate 
+    else if !Number.isInteger(col)
+        p below mentioned columns are not appropriate 
+    else if rows < 0 || rows > 5
+        p below mentioned rows are in one to four range 
+    else if col < 0 || col > 5
+        p below mentioned colums are in one to four range
+    else
+       table#outer            
+            - for(let i=0; i<rows; i++) {
+               tr#middle 
+                 - for(let j=0; j<col; j++) {
+                     td= (i + j) % rows
+                 -}              
+            - }
